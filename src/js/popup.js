@@ -512,6 +512,7 @@ function toggleBlockedResourcesHandler(e) {
     $("#collapse-blocked-resources").show();
     $("#expand-blocked-resources").hide();
     $("#blockedResources").slideDown();
+    $("#tracker-list-header").attr("aria-expanded", true);
     chrome.runtime.sendMessage({
       type: "updateSettings",
       data: { showExpandedTrackingSection: true }
@@ -520,6 +521,7 @@ function toggleBlockedResourcesHandler(e) {
     $("#collapse-blocked-resources").hide();
     $("#expand-blocked-resources").show();
     $("#blockedResources").slideUp();
+    $("#tracker-list-header").attr("aria-expanded", false);
     chrome.runtime.sendMessage({
       type: "updateSettings",
       data: { showExpandedTrackingSection: false }
