@@ -126,7 +126,7 @@ let htmlUtils = {
       let id = fqdn.replace(/\./g, '-');
       return `
 <div class="switch-container ${action}">
-  <div class="switch-toggle switch-3 switch-candy">
+  <div class="switch-toggle switch-3 switch-candy" role="radiogroup" aria-label="${i18n.getMessage('popup_slider_label', fqdn)}">
     <input id="block-${id}" name="${fqdn}" value="${constants.BLOCK}" type="radio" aria-label="${tooltips.block}" ${is_checked(constants.BLOCK, action)}>
     <label title="${tooltips.block}" class="tooltip" for="block-${id}"></label>
     <input id="cookieblock-${id}" name="${fqdn}" value="${constants.COOKIEBLOCK}" type="radio" aria-label="${tooltips.cookieblock}" ${is_checked(constants.COOKIEBLOCK, action)}>

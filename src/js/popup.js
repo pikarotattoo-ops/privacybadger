@@ -573,6 +573,11 @@ function createBreakageNote(domain, i18n_message_key) {
     autoClose: false,
     content: chrome.i18n.getMessage(i18n_message_key),
     functionReady: function (tooltip) {
+      // Add aria-hidden to ensure that the tooltip isn't read twice by screenreaders
+      // It should be read along with the selected slider option (via aria-describedby), and not where it's inserted at the end of the popup DOM
+      $(tooltip.elementTooltip()).attr({role: "tooltip", "aria-hidden": "true"});
+      $slider_allow .closest(".switch-toggle").find("input:checked").attr("aria-describedby", tooltip.elementTooltip().id);
+
       // close on tooltip click/tap
       $(tooltip.elementTooltip()).on('click', function (e) {
         e.preventDefault();
@@ -677,11 +682,13 @@ function refreshPopup() {
     $('#expand-blocked-resources').hide();
     $('#collapse-blocked-resources').show();
     $('#blockedResources').show();
+    $("#tracker-list-header").attr("aria-expanded", true);
 
   } else {
     $('#expand-blocked-resources').show();
     $('#collapse-blocked-resources').hide();
     $('#blockedResources').hide();
+    $("#tracker-list-header").attr("aria-expanded", false);
   }
 
   let domainsArr = [];
