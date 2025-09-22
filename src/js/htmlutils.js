@@ -122,11 +122,13 @@ let htmlUtils = {
       allow: i18n.getMessage('domain_slider_allow_tooltip')
     };
 
+    let aria_label = i18n.getMessage('popup_slider_label', 'XXX');
+
     return function (fqdn, action) {
       let id = fqdn.replace(/\./g, '-');
       return `
 <div class="switch-container ${action}">
-  <div class="switch-toggle switch-3 switch-candy" role="radiogroup" aria-label="${i18n.getMessage('popup_slider_label', fqdn)}">
+  <div class="switch-toggle switch-3 switch-candy" role="radiogroup" aria-label="${aria_label.replace('XXX', fqdn)}">
     <input id="block-${id}" name="${fqdn}" value="${constants.BLOCK}" type="radio" aria-label="${tooltips.block}" ${is_checked(constants.BLOCK, action)}>
     <label title="${tooltips.block}" class="tooltip" for="block-${id}"></label>
     <input id="cookieblock-${id}" name="${fqdn}" value="${constants.COOKIEBLOCK}" type="radio" aria-label="${tooltips.cookieblock}" ${is_checked(constants.COOKIEBLOCK, action)}>
@@ -147,10 +149,11 @@ let htmlUtils = {
    */
   getDntIconHtml: (function () {
     let dnt_icon_url = chrome.runtime.getURL('/icons/dnt-16.png');
+    let dnt_aria_label = i18n.getMessage('dnt_tooltip');
     return function () {
       return `
       <div class="dnt-compliant">
-        <a target=_blank href="https://privacybadger.org/#-I-am-an-online-advertising-tracking-company.--How-do-I-stop-Privacy-Badger-from-blocking-me" aria-label="${i18n.getMessage('dnt_tooltip')}"><img src="${dnt_icon_url}" alt=""></a>
+        <a target=_blank href="https://privacybadger.org/#-I-am-an-online-advertising-tracking-company.--How-do-I-stop-Privacy-Badger-from-blocking-me" aria-label="${dnt_aria_label}"><img src="${dnt_icon_url}" alt=""></a>
       </div>
       `.trim();
     };
