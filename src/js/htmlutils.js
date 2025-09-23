@@ -53,6 +53,8 @@ let htmlUtils = {
         }
       }
     },
+    // Meet accessibility requirement that the tooltip stays open when a user hovers over it
+    interactive: true
   },
 
   /**
