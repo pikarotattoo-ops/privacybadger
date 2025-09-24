@@ -545,33 +545,6 @@ function toggleFirstPartyInfoHandler() {
 }
 
 /**
- * Make tooltips keyboard accessible
- */
-function triggerTooltipOnFocus() {
-  $('.tooltip').on('focus', function() {
-    $(this).tooltipster('show');
-  });
-  $('.tooltip').on('blur', function() {
-    $(this).tooltipster('hide');
-  });
-
-  // Workaround for slider tooltips
-  // The input receives keyboard focus, but the tooltip must be attached to label to appear in the correct place
-  $('input').on('focus', function () {
-    const label = $('label.tooltip[for="' + this.id + '"]');
-    if (label.length) {
-      label.tooltipster('show');
-    }
-  });
-  $('input').on('blur', function () {
-    const label = $('label.tooltip[for="' + this.id + '"]');
-    if (label.length) {
-      label.tooltipster('hide');
-    }
-  });
-}
-
-/**
  * Handler to undo user selection for a domain
  */
 function revertDomainControl(event) {
@@ -663,7 +636,7 @@ function refreshPopup() {
 
     // activate tooltips
     $('.tooltip').tooltipster();
-    triggerTooltipOnFocus();
+    htmlUtils.triggerTooltipsOnFocus();
 
     window.SLIDERS_DONE = true;
 
@@ -736,7 +709,7 @@ function refreshPopup() {
 
     // activate tooltips
     $('.tooltip').tooltipster();
-    triggerTooltipOnFocus();
+    htmlUtils.triggerTooltipsOnFocus();
 
     window.SLIDERS_DONE = true;
 
@@ -813,7 +786,7 @@ function refreshPopup() {
 
   // activate tooltips
   $('.tooltip').tooltipster();
-  triggerTooltipOnFocus();
+  htmlUtils.triggerTooltipsOnFocus();
 
   if (POPUP_DATA.trackerCount === 0) {
     // show "no trackers" message
@@ -853,7 +826,6 @@ function refreshPopup() {
 
     // activate tooltips
     $printable.find('.tooltip:not(.tooltipstered)').tooltipster(DOMAIN_TOOLTIP_CONF);
-    triggerTooltipOnFocus();
 
     if ($printable.hasClass('breakage-note')) {
       let domain = $printable[0].dataset.origin;
@@ -865,6 +837,8 @@ function refreshPopup() {
     } else {
       $('#not-yet-blocked-header').tooltipster();
       $('#non-trackers-header').tooltipster();
+      htmlUtils.triggerTooltipsOnFocus();
+      htmlUtils.triggerSliderTooltipsOnFocus();
       window.SLIDERS_DONE = true;
     }
   }
@@ -973,7 +947,6 @@ function hideOverlay(overlay_id) {
 
 $(function () {
   $.tooltipster.setDefaults(htmlUtils.TOOLTIPSTER_DEFAULTS);
-  triggerTooltipOnFocus();
 
   function getPopupData(tab) {
     chrome.runtime.sendMessage({
